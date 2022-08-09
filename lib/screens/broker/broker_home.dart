@@ -22,7 +22,7 @@ class _BrokerHomeScreenState extends State<BrokerHomeScreen> {
   int _selectedIndex = 0;
   final List<Widget> _children = [
     //const BrokerPropertyListPage(),
-      MyHome(),
+      Pagination(),
 
     const ResalePage(),
     // const BrokerClientsPage(),

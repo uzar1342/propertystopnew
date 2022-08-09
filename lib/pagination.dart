@@ -21,12 +21,12 @@ import 'package:propertystop/utils/custom_dialog.dart';
 
 import 'models/response/propery_list_response.dart';
 
-class MyHome extends StatefulWidget {
+class Pagination extends StatefulWidget {
   @override
-  _MyHomeState createState() => _MyHomeState();
+  _PaginationState createState() => _PaginationState();
 }
 
-class _MyHomeState extends State<MyHome> {
+class _PaginationState extends State<Pagination> {
   late ScrollController controller;
  String page="";
   String? locality;

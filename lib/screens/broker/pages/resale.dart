@@ -22,6 +22,9 @@ class _ResalePageState extends State<ResalePage>
   late TabController _tabController;
 
   final controller = ResaleListViewModel();
+  TextEditingController mobileNumberInput=new TextEditingController();
+  TextEditingController mobileNumberInput1=new TextEditingController();
+
 
   @override
   void initState() {
@@ -89,7 +92,7 @@ class _ResalePageState extends State<ResalePage>
                               SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  // controller: mobileNumberInput,
+                                   controller: mobileNumberInput,
                                   style: Theme.of(context).textTheme.headline6,
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
@@ -143,6 +146,11 @@ class _ResalePageState extends State<ResalePage>
                                         itemBuilder: ((context, index) {
                                           var property = controller
                                               .resalePropertyList[index];
+                                          if (property.projectName
+                                              .toString()
+                                              .toLowerCase()
+                                              .contains(mobileNumberInput.value.text
+                                              .toLowerCase()))
                                           return Container(
                                             margin: const EdgeInsets.symmetric(vertical: 20),
                                             // height: 250,
@@ -298,6 +306,7 @@ class _ResalePageState extends State<ResalePage>
                                               ],
                                             ),
                                           );
+                                          return Container();
                                         }),
                                       ),
                               )
@@ -319,7 +328,7 @@ class _ResalePageState extends State<ResalePage>
                           SizedBox(
                             width: double.infinity,
                             child: TextFormField(
-                              // controller: mobileNumberInput,
+                               controller: mobileNumberInput1,
                               style: Theme.of(context).textTheme.headline6,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
@@ -373,6 +382,15 @@ class _ResalePageState extends State<ResalePage>
                               itemBuilder: ((context, index) {
                                 var property = controller
                                     .resaleClientList[index];
+                                if (property.projectName
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(mobileNumberInput1.value.text
+                                    .toLowerCase())||property.propRoom
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(mobileNumberInput1.value.text
+                                    .toLowerCase()) )
                                 return Container(
                                   margin: const EdgeInsets.symmetric(vertical: 20),
                                   // height: 250,
@@ -528,6 +546,7 @@ class _ResalePageState extends State<ResalePage>
                                     ],
                                   ),
                                 );
+                                return Container();
                               }),
                             ),
                           )
