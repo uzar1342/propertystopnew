@@ -1011,41 +1011,41 @@ class _ResaleClientPageState extends State<ResaleClientPage> {
     ];
   }
 
-  List<FormBuilderFieldOption> getAmenities() {
+  List<FormBuilderChipOption> getAmenities() {
     return [
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Swimming Pool",
         child: Text("Swimming Pool"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Laundry Room",
         child: Text("Laundry Room"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Gym",
         child: Text("Gym"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Fire Alarm",
         child: Text("Fire Alarm"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Reserved Parking",
         child: Text("Reserved Parking"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Visitors Parking",
         child: Text("Visitor Parking"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "CCTV Camera",
         child: Text("CCTV Camera"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Power Backup",
         child: Text("Power Backup"),
       ),
-      const FormBuilderFieldOption(
+      const FormBuilderChipOption(
         value: "Lift",
         child: Text("Lift"),
       ),
