@@ -14,7 +14,6 @@ import 'package:propertystop/screens/youtube_videos.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:propertystop/utils/custom_dialog.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
 import '../../vidioplayer.dart';
 
 class BrokerPropertyDetailPage extends StatefulWidget {

@@ -444,19 +444,19 @@ async {
                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  LoginScreen(type: 'Customer',)));
                         return;
                       } else if (selectedOption == "emi_calculator") {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            router.emiCalcPage, (route) => false);
+                        Navigator.of(context).pushNamed(
+                            router.emiCalcPage, arguments: (route) => false);
                         return;
                       } else if (selectedOption == "loan_application") {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            router.loanApplicationPage, (route) => false);
+                        Navigator.of(context).pushNamed(
+                            router.loanApplicationPage, arguments: (route) => false);
                         return;
                       } else if (selectedOption == "primary_new") {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString(
                             constants.selectedOption, selectedOption!);
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            router.userMain, (route) => false);
+                        Navigator.of(context).pushNamed(
+                            router.userMain, arguments: (route) => false);
                         return;
                       }
                     },

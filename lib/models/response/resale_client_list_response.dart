@@ -22,8 +22,9 @@ class ResaleClientListResponse {
     required this.propRoom,
     required this.propCarpetArea,
     required this.propPrice,
+    this.other_broker_property_data,
   });
-
+  dynamic other_broker_property_data;
   int srNo;
   String uniqueId;
   int propId;
@@ -45,6 +46,7 @@ class ResaleClientListResponse {
         propRoom: json["prop_room"],
         propCarpetArea: json["prop_carpet_area"],
         propPrice: json["prop_price"],
+        other_broker_property_data: json["other_broker_property_data"] == null ? null : List<ResaleClientListResponse>.from(json["other_broker_property_data"].map((x) => ResaleClientListResponse.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +59,6 @@ class ResaleClientListResponse {
         "prop_room": propRoom,
         "prop_carpet_area": propCarpetArea,
         "prop_price": propPrice,
-      };
+    "other_broker_property_data": other_broker_property_data == null ? null : List<dynamic>.from(other_broker_property_data.map((x) => x.toJson())),
+  };
 }

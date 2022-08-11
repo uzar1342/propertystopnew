@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,8 @@ import 'package:propertystop/utils/custom_dialog.dart';
 import 'models/response/propery_list_response.dart';
 
 class Pagination extends StatefulWidget {
+  const Pagination({super.key});
+
   @override
   _PaginationState createState() => _PaginationState();
 }
@@ -37,7 +40,6 @@ class _PaginationState extends State<Pagination> {
   List<Datum?> _posts = [];
   @override
   void initState() {
-    print(constants.checktype);
     super.initState();
     controller = ScrollController()..addListener(_scrollListener);
   }
@@ -51,6 +53,7 @@ class _PaginationState extends State<Pagination> {
   }
 
   getAndStoreLocationDetails() async {
+
     final prefs = await SharedPreferences.getInstance();
     Position pos = await getPosition();
     prefs.setDouble("latitude", pos.latitude);
@@ -59,7 +62,6 @@ class _PaginationState extends State<Pagination> {
   }
 
   Future < PropertyListResponse ? > _firstLoad() async {
-
     try {
       var url = Uri.parse('${constants.baseUrl}/paginate-data');
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:propertystop/utils/router.dart' as router;
@@ -21,8 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bool? isLoggedIn = prefs.getBool(constants.isLoggedIn);
     String? intro = prefs.getString(constants.isIntro);
-    constants.checktype = prefs.getString(constants.userType)??"";
+    constants.checktype = prefs.getString(constants.userType)??"123";
 
+//print("object"+constants.checktype);
 
     if (isLoggedIn != null) {
       setState(() {

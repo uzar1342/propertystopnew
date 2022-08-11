@@ -221,7 +221,10 @@ class BrokerPropertyListCard extends StatelessWidget {
                   const SizedBox(
                     width: 12,
                   ),
-                  Expanded(
+                  if(property.downloadBrochure==null||property.downloadBrochure=="#"||property.downloadBrochure=="")
+                  Container()
+                    else
+                    Expanded(
                     child: OutlinedButton(
                       onPressed: () {
 

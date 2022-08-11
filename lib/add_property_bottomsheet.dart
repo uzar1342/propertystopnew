@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:propertystop/screens/broker/pages/resale.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "I have a resale property",
+                              "resale property",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -152,7 +153,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                 isExpanded: false,
                                 items: [
                                   buildMenuItem("RESAL PROPERTY"),
-                                  buildMenuItem("RESALE CLINT"),
+                                  buildMenuItem("RESALE CLIENT"),
                                 ],
                                 onChanged: (value) => setState(() {
                                   resel = value;
@@ -323,6 +324,8 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                     );
                                     return;
                                   } else {
+
+
                                     Navigator.of(context).pop();
                                     showDialog<String>(
                                       context: context,
@@ -331,7 +334,9 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                         content: Text(json.decode(result)['message']),
                                         actions: <Widget>[
                                           TextButton(
-                                            onPressed: () => Navigator.pop(context, 'OK'),
+                                            onPressed: () =>
+                                              {
+                                              Navigator.pop(context, 'OK')},
                                             child: const Text('OK'),
                                           ),
                                         ],

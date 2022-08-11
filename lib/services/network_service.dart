@@ -304,7 +304,7 @@ class NetworkService {
       AddPropertyRequest addPropertyRequest) async {
     var url = Uri.parse('${constants.baseUrl}/addAppResalePropClient');
     Map<String, String> Addtype={};
-    if(constants.checktype=="Broker")
+    if(constants.checktype.trim()=="Broker")
     {
       Addtype={'addAppResalePropClient': 'addAppResalePropClient'};
       url = Uri.parse(
@@ -358,11 +358,10 @@ print("Addtype"+Addtype.keys.first+Addtype.values.first);
     final prefs = await SharedPreferences.getInstance();
     var mobileNumber = prefs.getString(constants.mobileNumber);
     var url;
-    if(constants.checktype=="Broker")
+    if(constants.checktype.trim()=="Broker")
       {
        url = Uri.parse(
             '${constants.baseUrl}/showAppResaleProperties?mobile_number=$mobileNumber');
-
       }
     else
       {
@@ -398,7 +397,7 @@ print("Addtype"+Addtype.keys.first+Addtype.values.first);
     final prefs = await SharedPreferences.getInstance();
     var mobileNumber = prefs.getString(constants.mobileNumber);
     var url;
-    if(constants.checktype=="Broker")
+    if(constants.checktype.trim()=="Broker")
     {
       url = Uri.parse(
           '${constants.baseUrl}/showAppResaleClient?mobile_number=$mobileNumber');
@@ -411,7 +410,6 @@ print("Addtype"+Addtype.keys.first+Addtype.values.first);
 
     }
 
-print(url);
     http.Response response = await http
         .get(
           url,

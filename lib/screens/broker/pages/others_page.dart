@@ -10,6 +10,7 @@ import 'package:propertystop/utils/router.dart' as router;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/custom_dialog.dart';
+import '../../realestate_webview.dart';
 
 class BrokerOthersPage extends StatefulWidget {
   const BrokerOthersPage({Key? key}) : super(key: key);
@@ -175,17 +176,28 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Blogs",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                      child: GestureDetector(
+                        onTap: () {
+                  Get.to(() =>  RealEstateWebView(
+                    pageUrl: 'https://propertystop.com',
+                    title: 'Blogs',
+                  ),
+                  transition: Transition.rightToLeft);
+                  // Navigator.pushNamed(
+                  //     context, router.loanApplicationPage);
+                  },
+                        child: Row(
+                          children: const [
+                            Text(
+                              "Blogs",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -227,7 +239,7 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                       child: Row(
                         children: const [
                           Text(
-                            "Manage Notifications",
+                            "Notifications",
                             style: TextStyle(
                               color: Color.fromRGBO(0, 0, 0, 0.5),
                               fontSize: 13,
@@ -342,17 +354,25 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Terms & Conditions",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                      child: GestureDetector(
+                        onTap: (){
+                          // RealEstateWebView(
+                          //   pageUrl: 'https://propertystop.com',
+                          //   title: 'Terms & Conditions',
+                          // );
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              "Terms & Conditions",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -368,17 +388,25 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Privacy Policy",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                      child: GestureDetector(
+                        onTap: (){
+                          // RealEstateWebView(
+                          //   pageUrl: 'https://propertystop.com',
+                          //   title: 'Terms & Conditions',
+                          // );
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              "Privacy Policy",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -394,46 +422,31 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "About Us",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                      child: GestureDetector(
+                        onTap: (){
+                          Get.to(() => RealEstateWebView(
+                            pageUrl: 'https://propertystop.com/frequently-asked-questions',
+                            title: 'About Us',
+                          ),
+                              transition: Transition.rightToLeft);
+
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              "About Us",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5, horizontal: 0),
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Color.fromRGBO(0, 0, 0, 0.2),
-                          ),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Propert Stop Version 1.0.0",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -469,17 +482,27 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Contact Us",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: GestureDetector(
+                        onTap: (){
+                          Get.to(() =>  RealEstateWebView(
+                            pageUrl: 'https://propertystop.com/contact',
+                            title: 'Contact Us',
                           ),
-                        ],
+                              transition: Transition.rightToLeft);
+
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              "Contact Us",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
