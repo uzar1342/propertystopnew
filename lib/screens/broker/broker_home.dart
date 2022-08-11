@@ -23,7 +23,6 @@ class _BrokerHomeScreenState extends State<BrokerHomeScreen> {
   final List<Widget> _children = [
     //const BrokerPropertyListPage(),
       Pagination(),
-
     const ResalePage(),
     // const BrokerClientsPage(),
     const RealEstateWebView(

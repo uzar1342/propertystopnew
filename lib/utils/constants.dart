@@ -12,7 +12,7 @@ const String logo = "assets/logo.png";
 
 // API's
 const String login = "";
-
+String checktype="";
 // Shared Preference Keys
 const String isLoggedIn = "isLoggedIn";
 const String isIntro = "isIntro";

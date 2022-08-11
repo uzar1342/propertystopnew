@@ -46,8 +46,6 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const SplashScreen());
     case introPage:
       return MaterialPageRoute(builder: (context) => const IntroScreen());
-    case loginPage:
-      return MaterialPageRoute(builder: (context) => const LoginScreen());
     case otpPage:
       return MaterialPageRoute(builder: (context) => const OtpScreen());
     case optionsPage:

@@ -3,14 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:propertystop/controllers/resale_list_viewmodel.dart';
-import 'package:propertystop/models/response/propery_list_response.dart';
-import 'package:propertystop/screens/broker/components/property_card.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../../add_property_bottomsheet.dart';
 import '../../../models/response/resale_property_list_response.dart';
 import '../../../utils/constants.dart';
-import '../../../utils/custom_dialog.dart';
 
 class ResalePage extends StatefulWidget {
   const ResalePage({Key? key}) : super(key: key);
@@ -97,6 +94,11 @@ class _ResalePageState extends State<ResalePage>
                                 width: double.infinity,
                                 child: TextFormField(
                                    controller: mobileNumberInput,
+                                      onChanged: (text) {
+                                        setState(() {
+                                          print(text);
+                                        });
+                                      },
                                   style: Theme.of(context).textTheme.headline6,
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
@@ -152,6 +154,7 @@ class _ResalePageState extends State<ResalePage>
                                               .resalePropertyList[index].otherBrokerClientData;
                                           var property = controller
                                               .resalePropertyList[index];
+                                          print(test[0].isBlank);
                                           if(test.length>1)
                                             {
                                               auto=true;
@@ -308,13 +311,15 @@ class _ResalePageState extends State<ResalePage>
                                                     ),
                                                   ),
                                                   Divider(thickness: 1,),
-                                                  test.length!=0?
+                                                  test.length>0?
                                                   Padding(
                                                     padding: const EdgeInsets.fromLTRB(0,0,0,10),
                                                     child: CarouselSlider.builder(
                                                         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
                                                             Container(
+                                                              color: Colors.black54,
                                                               child: Card(
+                                                                color: Color(0xfff5f7f8),
                                                                 shape: RoundedRectangleBorder(
                                                                   borderRadius: BorderRadius.circular(10),
                                                                 ),
@@ -336,7 +341,7 @@ class _ResalePageState extends State<ResalePage>
                                           child: Text(
                                               test[itemIndex].projectName,
                                           style: const TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.black54,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w600,
                                           overflow: TextOverflow.ellipsis,
@@ -352,7 +357,7 @@ class _ResalePageState extends State<ResalePage>
                                           children: [
                                           Icon(
                                           Icons.add_business_rounded,
-                                          color: Colors.black87,
+                                          color: Colors.black54,
                                           size: 18,
                                           ),
                                           const SizedBox(
@@ -362,7 +367,7 @@ class _ResalePageState extends State<ResalePage>
                                           child: Text(
                                               test[itemIndex].buildFloors.toString(),
                                           style: const TextStyle(
-                                          color: Colors.black87,
+                                          color: Colors.black54,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                           overflow: TextOverflow.ellipsis,
@@ -378,7 +383,7 @@ class _ResalePageState extends State<ResalePage>
                                           children: [
                                           const Icon(
                                           Icons.note,
-                                          color: Colors.black87,
+                                          color: Colors.black54,
                                           size: 18,
                                           ),
                                           const SizedBox(
@@ -388,7 +393,7 @@ class _ResalePageState extends State<ResalePage>
                                           child: Text(
                                               test[itemIndex].propAbout,
                                           style: const TextStyle(
-                                          color: Colors.black87,
+                                          color: Colors.black54,
                                           fontSize: 13,
                                           fontWeight: FontWeight.w500,
                                           overflow: TextOverflow.clip,
@@ -414,7 +419,7 @@ class _ResalePageState extends State<ResalePage>
                                                                                    child: Text(
                                                                                      test[itemIndex].propRoom,
                                                                                      style: const TextStyle(
-                                                                                       color: Colors.black87,
+                                                                                       color: Colors.black54,
                                                                                        fontSize: 15,
                                                                                        fontWeight: FontWeight.w500,
                                                                                        overflow: TextOverflow.ellipsis,
@@ -426,7 +431,7 @@ class _ResalePageState extends State<ResalePage>
                                                                                    child: Text(
                                                                                      test[itemIndex].propCarpetArea.toString()+" sqt",
                                                                                      style: const TextStyle(
-                                                                                       color: Colors.black87,
+                                                                                       color: Colors.black54,
                                                                                        fontSize: 15,
                                                                                        fontWeight: FontWeight.w500,
                                                                                        overflow: TextOverflow.ellipsis,
@@ -498,6 +503,11 @@ class _ResalePageState extends State<ResalePage>
                           SizedBox(
                             width: double.infinity,
                             child: TextFormField(
+                              onChanged: (text) {
+                                  setState(() {
+                                  print(text);
+                                  });
+                                },
                                controller: mobileNumberInput1,
                               style: Theme.of(context).textTheme.headline6,
                               keyboardType: TextInputType.name,
@@ -673,7 +683,7 @@ class _ResalePageState extends State<ResalePage>
                                             ),
                                             Expanded(
                                               child: Text(
-                                                "₹ "+property.propPrice,
+                                                "₹ "+property.propPrice.toString(),
                                                 style: const TextStyle(
                                                   color: Colors.black87,
                                                   fontSize: 15,
@@ -698,7 +708,7 @@ class _ResalePageState extends State<ResalePage>
                                             ),
                                             Expanded(
                                               child: Text(
-                                                property.propCarpetArea+" Sqrt",
+                                                property.propCarpetArea.toString()+" Sqrt",
                                                 style: const TextStyle(
                                                   color: Colors.black87,
                                                   fontSize: 15,

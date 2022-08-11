@@ -168,7 +168,7 @@ class NetworkService {
     }
   }
 
-  Future<String?> loginUser(String mobile, String password) async {
+  Future<String?> loginUser(String mobile, String password,String type) async {
     var url = Uri.parse('${constants.baseUrl}/login-user');
 
     var request = http.MultipartRequest('POST', url);
@@ -176,6 +176,7 @@ class NetworkService {
     request.fields.addAll({
       'btn_login': 'btn_login',
       'field_log': '',
+      'user_type': type,
       'contact_number': mobile,
       'user_password': password,
       'device': 'Mobile'
@@ -302,10 +303,25 @@ class NetworkService {
   Future<String?> addPropertyResale(
       AddPropertyRequest addPropertyRequest) async {
     var url = Uri.parse('${constants.baseUrl}/addAppResalePropClient');
+    Map<String, String> Addtype={};
+    if(constants.checktype=="Broker")
+    {
+      Addtype={'addAppResalePropClient': 'addAppResalePropClient'};
+      url = Uri.parse(
+          '${constants.baseUrl}/addAppResalePropClient');
+    }
+    else
+    {
+      Addtype={'addCustAppResalePropClient': 'addCustAppResalePropClient'};
+      url = Uri.parse(
+          '${constants.baseUrl}/addCustAppResalePropClient');
 
+    }
+
+print("Addtype"+Addtype.keys.first+Addtype.values.first);
     var request = http.MultipartRequest('POST', url);
     request.fields.addAll({
-      'addAppResalePropClient': 'addAppResalePropClient',
+      Addtype.keys.first:Addtype.values.first,
       'mobile_number': addPropertyRequest.mobileNumber,
       'property_type': addPropertyRequest.propertyType,
       'project_name': addPropertyRequest.projectName,
@@ -341,9 +357,19 @@ class NetworkService {
   Future<List<ResalePropertyListResponse>?> getResalePropertyList() async {
     final prefs = await SharedPreferences.getInstance();
     var mobileNumber = prefs.getString(constants.mobileNumber);
+    var url;
+    if(constants.checktype=="Broker")
+      {
+       url = Uri.parse(
+            '${constants.baseUrl}/showAppResaleProperties?mobile_number=$mobileNumber');
 
-    var url = Uri.parse(
-        '${constants.baseUrl}/showAppResaleProperties?mobile_number=$mobileNumber');
+      }
+    else
+      {
+        url = Uri.parse(
+            '${constants.baseUrl}/showCustAppResaleProperties?mobile_number=$mobileNumber');
+
+      }
 
     http.Response response = await http
         .get(
@@ -371,9 +397,20 @@ class NetworkService {
   Future<List<ResaleClientListResponse>?> getResaleClientList() async {
     final prefs = await SharedPreferences.getInstance();
     var mobileNumber = prefs.getString(constants.mobileNumber);
+    var url;
+    if(constants.checktype=="Broker")
+    {
+      url = Uri.parse(
+          '${constants.baseUrl}/showAppResaleClient?mobile_number=$mobileNumber');
 
-    var url = Uri.parse(
-        '${constants.baseUrl}/showAppResaleClient?mobile_number=$mobileNumber');
+    }
+    else
+    {
+      url = Uri.parse(
+          '${constants.baseUrl}/showCustAppResaleClient?mobile_number=$mobileNumber');
+
+    }
+
 print(url);
     http.Response response = await http
         .get(

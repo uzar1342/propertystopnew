@@ -12,6 +12,7 @@ import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:propertystop/screens/broker/components/property_card.dart';
+import 'package:propertystop/screens/notifications.dart';
 import 'package:propertystop/utils/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/response/propery_list_response.dart';
@@ -36,6 +37,7 @@ class _PaginationState extends State<Pagination> {
   List<Datum?> _posts = [];
   @override
   void initState() {
+    print(constants.checktype);
     super.initState();
     controller = ScrollController()..addListener(_scrollListener);
   }
@@ -133,7 +135,10 @@ class _PaginationState extends State<Pagination> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+
+                  Navigator.of(context).push(MaterialPageRoute(builder: (c)=> NotificationPage()));
+                },
                 icon: const Icon(Icons.notifications),
               )
             ],

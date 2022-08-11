@@ -31,8 +31,8 @@ class ResaleClientListResponse {
   String propAbout;
   int buildFloors;
   String propRoom;
-  String propCarpetArea;
-  String propPrice;
+  dynamic propCarpetArea;
+  dynamic propPrice;
 
   factory ResaleClientListResponse.fromJson(Map<String, dynamic> json) =>
       ResaleClientListResponse(

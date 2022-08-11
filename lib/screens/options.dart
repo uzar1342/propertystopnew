@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:propertystop/utils/router.dart' as router;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'login.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class OptionsScreen extends StatefulWidget {
@@ -436,11 +438,10 @@ async {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString(
                             constants.selectedOption, selectedOption!);
-                        Navigator.of(context).pushNamed(router.loginPage);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  LoginScreen(type: 'Broker',)));
                         return;
                       } else if (selectedOption == "buy_sell") {
-                        // Navigator.of(context).pushNamedAndRemoveUntil(
-                        //     router.brokerMain, (route) => false);
+                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  LoginScreen(type: 'Customer',)));
                         return;
                       } else if (selectedOption == "emi_calculator") {
                         Navigator.of(context).pushNamedAndRemoveUntil(

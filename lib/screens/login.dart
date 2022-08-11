@@ -14,8 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'broker/broker_home.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
 
+   LoginScreen({Key? key,required this.type}) : super(key: key);
+   String type;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -240,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             try {
                               final loginReq = await NetworkService().loginUser(
-                                  mobileNumberInput.text, passwordInput.text);
+                                  mobileNumberInput.text, passwordInput.text,widget.type);
                               context.loaderOverlay.hide();
 
                               var result = json.decode(loginReq.toString());
@@ -257,6 +258,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefs.setBool(constants.isLoggedIn, true);
                               prefs.setString(constants.mobileNumber,
                                   mobileNumberInput.text);
+                              prefs.setString(constants.userType,
+                                  widget.type);
 
                               // Login Success
                               Fluttertoast.showToast(

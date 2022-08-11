@@ -282,6 +282,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
+                                var type="";
                                 final prefs = await SharedPreferences.getInstance();
                                 String? mobile = prefs.getString(constants.mobileNumber);
                                 if (prop_price.value.text != "" &&
@@ -295,11 +296,11 @@ class _AddpropertylistState extends State<Addpropertylist> {
 
                                   if(resel=="RESAL PROPERTY")
                                     {
-                                      resel="resale_property";
+                                      type="resale_property";
                                     }
                                   else
                                     {
-                                      resel="resale_client";
+                                      type="resale_client";
                                     }
 
                                   var result = await NetworkService()
@@ -307,7 +308,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                           addAppResalePropClient:
                                               "addAppResalePropClient",
                                           mobileNumber: mobile.toString(),
-                                          propertyType: resel.toString(),
+                                          propertyType: type.toString(),
                                           projectName: project_name.value.text,
                                           propAbout: prop_about.value.text,
                                           buildFloors: build_floors.value.text,
