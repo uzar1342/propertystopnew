@@ -336,6 +336,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                           TextButton(
                                             onPressed: () =>
                                               {
+                                                ResalePage().createState().initState(),
                                               Navigator.pop(context, 'OK')},
                                             child: const Text('OK'),
                                           ),

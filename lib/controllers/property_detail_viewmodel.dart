@@ -7,7 +7,7 @@ class PropertyDetailViewModel extends GetxController {
   var isLoading = false.obs;
   var propertyDetail = Rxn<PropertyDetailResponse>();
   var propDetails = <PropertyDetails>[].obs;
-
+var place;
   // PropertyListViewModel(){
   //   getPropertyList();
   // }
@@ -15,7 +15,6 @@ class PropertyDetailViewModel extends GetxController {
   Future<void> getPropertyDetail(String propertyId) async {
     isLoading(true);
     var result = await NetworkService().getPropertyDetail(propertyId);
-print(result);
     try {
       if (result != null) {
         propertyDetail.value = result;
@@ -23,9 +22,6 @@ print(result);
           PropertyDetails(
               title: "Maharera Number",
               value: result.propData[0].mahareraNumber),
-          PropertyDetails(
-              title: "Property Status",
-              value: result.propData[0].propertyStatus),
           PropertyDetails(
               title: "Possesssion Date",
               value: result.propData[0].possesssionDate),
@@ -38,6 +34,8 @@ print(result);
           PropertyDetails(
               title: "Property Type", value: result.propData[0].propType),
         ];
+        place=result.places;
+
       }
     } catch (exp) {
       print(exp);

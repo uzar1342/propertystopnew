@@ -22,6 +22,7 @@ class BrokerPropertyDetailPage extends StatefulWidget {
 
   final Datum property;
 
+
   // Property property1 = dummy_properties[0];
 
   @override
@@ -33,10 +34,10 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
   final controller = PropertyDetailViewModel();
-
   @override
   void initState() {
     super.initState();
+    controller.place;
     controller.getPropertyDetail(widget.property.uniqueId);
     print(controller.propDetails.value);
   }
@@ -127,11 +128,14 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                         height: 12,
                       ),
                       // Property Name
+                      controller.propertyDetail.value!
+                          .propData.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           children: [
+
                             Row(
                               children: [
                                 Expanded(
@@ -244,7 +248,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                               )
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
@@ -325,6 +329,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                         height: 12,
                       ),
                       // Amenities
+                      controller.propertyDetail.value!.amenity.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.all(24),
@@ -376,11 +381,12 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                             )
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
                       // Features
+                      controller.propertyDetail.value!.features.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.all(24),
@@ -431,11 +437,12 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                             )
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
                       // Property Details
+                      controller.propDetails.value.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.all(24),
@@ -501,7 +508,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                             })
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
@@ -632,6 +639,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                         height: 12,
                       ),
                       // Floor Plans
+                      controller.propertyDetail.value!.floors.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
@@ -747,7 +755,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                             ),
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
@@ -798,7 +806,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.asset(
-                                  "assets/static_map.jpeg",
+                                  "assets/mumbaimap.jpeg",
                                   fit: BoxFit.cover,
                                   height: MediaQuery.of(context).size.height *
                                       0.2, // 35%
@@ -812,7 +820,68 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                       const SizedBox(
                         height: 12,
                       ),
+                      controller.place.length>0?
+                      Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Container(
+
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "What's Nearby",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+
+                                ...List.generate(
+                                    controller.place.length, (index) {
+                                  return Padding(
+                                      padding:  EdgeInsets.all(8)
+                                  ,child:Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.location_on,color: Colors.redAccent,),
+                                                Text(controller.place[index]["place"])
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 20,),
+                                                Text(controller.place[index]["desc"].toString().trim()),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+
+                                  );
+                                })
+                              ],
+                            ),
+                          ),
+                        ),
+                      ):Container(),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       // Property Description
+                      controller.propertyDetail.value!.propData.length>0?
                       Container(
                         color: Colors.white,
                         padding: const EdgeInsets.all(24.0),
@@ -846,127 +915,127 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                             ),
                           ],
                         ),
-                      ),
+                      ):Container(),
                       const SizedBox(
                         height: 12,
                       ),
                       // Builder Information
-                      Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Builder Information",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 0),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      "Name",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "Lodha Builders",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(0, 0, 0, 0.6),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 0),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      "No.of Projects",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "12+",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(0, 0, 0, 0.6),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 0),
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      "Started",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "2002",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(0, 0, 0, 0.6),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   color: Colors.white,
+                      //   padding: const EdgeInsets.all(24),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       const Align(
+                      //         alignment: Alignment.centerLeft,
+                      //         child: Text(
+                      //           "Builder Information",
+                      //           style: TextStyle(
+                      //             color: Colors.black,
+                      //             fontSize: 18,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric(
+                      //             vertical: 5, horizontal: 0),
+                      //         child: Container(
+                      //           padding: const EdgeInsets.only(bottom: 8),
+                      //           child: Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: const [
+                      //               Text(
+                      //                 "Name",
+                      //                 style: TextStyle(
+                      //                   color: Colors.black,
+                      //                   fontSize: 14,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 "Lodha Builders",
+                      //                 style: TextStyle(
+                      //                   color: Color.fromRGBO(0, 0, 0, 0.6),
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric(
+                      //             vertical: 5, horizontal: 0),
+                      //         child: Container(
+                      //           padding: const EdgeInsets.only(bottom: 8),
+                      //           child: Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: const [
+                      //               Text(
+                      //                 "No.of Projects",
+                      //                 style: TextStyle(
+                      //                   color: Colors.black,
+                      //                   fontSize: 14,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 "12+",
+                      //                 style: TextStyle(
+                      //                   color: Color.fromRGBO(0, 0, 0, 0.6),
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric(
+                      //             vertical: 5, horizontal: 0),
+                      //         child: Container(
+                      //           padding: const EdgeInsets.only(bottom: 8),
+                      //           child: Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: const [
+                      //               Text(
+                      //                 "Started",
+                      //                 style: TextStyle(
+                      //                   color: Colors.black,
+                      //                   fontSize: 14,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 5,
+                      //               ),
+                      //               Text(
+                      //                 "2002",
+                      //                 style: TextStyle(
+                      //                   color: Color.fromRGBO(0, 0, 0, 0.6),
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 12,
                       ),

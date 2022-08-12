@@ -27,9 +27,19 @@ class _ResalePageState extends State<ResalePage>
   TextEditingController mobileNumberInput1=new TextEditingController();
 
 
+  refrese()
+  {
+      setState(() {
+        controller.getResalePropertyList();
+        controller.getResaleClientList();
+        test=controller.resalePropertyList();
+      });
+  }
+
   @override
   void initState() {
     super.initState();
+    refrese();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     controller.getResalePropertyList();

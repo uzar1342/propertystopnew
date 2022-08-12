@@ -174,7 +174,7 @@ class _RequestVisitFormState extends State<RequestVisitForm> {
                                     filled: true,
                                     fillColor: constants.FIELD_COLOR,
                                     contentPadding: const EdgeInsets.all(12),
-                                    hintText: "some@example.com",
+                                    hintText: "some@virash.com",
                                     hintStyle: const TextStyle(
                                       fontSize: 16,
                                     ),

@@ -25,7 +25,7 @@ class PropertyPhotos extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      RouteTwo(image: imageUrls[index]["url"], name: ""),
+                      RouteTwo(image: imageUrls, name: ""),
                 ),
               );
             },
@@ -45,7 +45,7 @@ class PropertyPhotos extends StatelessWidget {
 }
 
 class RouteTwo extends StatelessWidget {
-  final String image;
+  final List image;
   final String name;
 
   RouteTwo({Key? key, required this.image, required this.name})
@@ -54,31 +54,47 @@ class RouteTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                width: double.infinity,
-                child: Image(
-                  image: NetworkImage(image),
-                ),
-              ),
+      body: Center(
+          child: SizedBox.fromSize(
+            size: Size.fromHeight(550.0),
+            child: PageView.builder(
+              controller: PageController(viewportFraction: 0.8),
+              itemCount: image.length,
+              itemBuilder: (BuildContext context, int index) {
+                return  Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16.0,
+                    horizontal: 8.0,
+                  ),
+                  child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.network(
+                          image[index]["url"],
+                          fit: BoxFit.cover,
+                        ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: FractionalOffset.bottomCenter,
+                              end: FractionalOffset.topCenter,
+                              colors: [
+                                Color(0x00000000).withOpacity(0.9),
+                                Color(0xff000000).withOpacity(0.01),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-            Container(
-              margin: const EdgeInsets.all(20.0),
-              child: Center(
-                child: Text(
-                  name,
-                  style: const TextStyle(fontSize: 40),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }
