@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:propertystop/services/network_service.dart';
-// import 'package:flutter_svg/svg.dart';
 import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:propertystop/utils/custom_dialog.dart';
 import 'package:propertystop/utils/router.dart' as router;
@@ -45,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
               height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                physics: const PageScrollPhysics(),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class PropertyPhotos extends StatelessWidget {
-  PropertyPhotos({Key? key, required this.imageUrls}) : super(key: key);
+  const PropertyPhotos({Key? key, required this.imageUrls, required this.title}) : super(key: key);
 
   final List<dynamic> imageUrls;
+  final String title;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Photos'),
+        title:  Text(title),
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -25,7 +27,7 @@ class PropertyPhotos extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      RouteTwo(image: imageUrls, name: ""),
+                      RouteTwo(image: imageUrls, name: title),
                 ),
               );
             },
@@ -33,7 +35,7 @@ class PropertyPhotos extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(imageUrls[index]["url"]),
+                  image: NetworkImage(title=="Photos"?imageUrls[index]["url"]:imageUrls[index].url),
                 ),
               ),
             ),
@@ -73,7 +75,7 @@ class RouteTwo extends StatelessWidget {
                       fit: StackFit.expand,
                       children: [
                         Image.network(
-                          image[index]["url"],
+                    name=="Photos"?image[index]["url"]:image[index].url,
                           fit: BoxFit.cover,
                         ),
                         DecoratedBox(

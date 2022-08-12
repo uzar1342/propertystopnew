@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:propertystop/controllers/property_detail_viewmodel.dart';
 import 'package:propertystop/models/response/propery_list_response.dart';
 import 'package:propertystop/screens/broker/models/property.dart';
@@ -66,16 +67,25 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
           child: Container(
             padding: const EdgeInsets.only(bottom: 100),
             child: Obx(() => (controller.isLoading.value)
-                ? Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        (Center(
-                          child: CircularProgressIndicator(),
-                        )),
-                      ],
+                ? Column(
+              mainAxisAlignment:
+              MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: SizedBox(
+                    child: GifView.asset(
+                      'assets/gifs/logo_red.gif',
+                      height: 50,
+                      width: 50,
+                      frameRate:
+                      30, // default is 15 FPS
                     ),
-                  )
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+              ],
+            )
                 : Column(
                     children: [
                       Stack(
@@ -266,7 +276,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                                     Get.to(
                                         () => PropertyPhotos(
                                             imageUrls: controller
-                                                .propertyDetail.value!.images),
+                                                .propertyDetail.value!.images, title: 'Photos',),
                                         transition: Transition.rightToLeft);
                                   },
                                   child: Container(
@@ -666,8 +676,11 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                                 controller.propertyDetail.value!.floors.length,
                                 (index) => GestureDetector(
                                   onTap: () {
-                                    print(controller.propertyDetail.value!
-                                        .floors[index].url);
+                                    Get.to(
+                                            () => PropertyPhotos(
+                                            imageUrls: controller.propertyDetail.value!
+                                                .floors,title: "Floor Plans"),
+                                        transition: Transition.rightToLeft);
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(

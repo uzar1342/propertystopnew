@@ -19,6 +19,11 @@ class ResalePage extends StatefulWidget {
 
 class _ResalePageState extends State<ResalePage>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKeyclient =
+  GlobalKey<RefreshIndicatorState>();
+
     bool auto=false;
   late TabController _tabController;
   late List<ResalePropertyListResponse> test;
@@ -27,19 +32,11 @@ class _ResalePageState extends State<ResalePage>
   TextEditingController mobileNumberInput1=new TextEditingController();
 
 
-  refrese()
-  {
-      setState(() {
-        controller.getResalePropertyList();
-        controller.getResaleClientList();
-        test=controller.resalePropertyList();
-      });
-  }
+
 
   @override
   void initState() {
     super.initState();
-    refrese();
     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     controller.getResalePropertyList();
@@ -67,6 +64,7 @@ class _ResalePageState extends State<ResalePage>
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
+              resizeToAvoidBottomInset: true,
               appBar: AppBar(
                 elevation: 0,
                 title: const Text(
@@ -156,335 +154,348 @@ class _ResalePageState extends State<ResalePage>
                                           ),
                                         ],
                                       )
-                                    : ListView.builder(
-                                        physics: const BouncingScrollPhysics(),
-                                        itemCount: controller
-                                            .resalePropertyList.length,
-                                        itemBuilder: ((context, index) {
-                                          List<ResalePropertyListResponse> test=controller
-                                              .resalePropertyList[index].otherBrokerClientData;
-                                          var property = controller
-                                              .resalePropertyList[index];
+                                    : RefreshIndicator(
+                                  key: _refreshIndicatorKey,
+                                  color: Colors.white,
+                                  backgroundColor: Colors.blue,
+                                  strokeWidth: 4.0,
+                                  onRefresh: () async {
+                                    _refreshIndicatorKey.currentState?.show(); setState(() {
+                                      controller.getResalePropertyList();
+                                      test=controller.resalePropertyList();
+                                  });
+                                    return Future<void>.delayed(const Duration(seconds: 3));
+                                  },
+                                      child: ListView.builder(
+                                          physics: const BouncingScrollPhysics(),
+                                          itemCount: controller
+                                              .resalePropertyList.length,
+                                          itemBuilder: ((context, index) {
+                                            List<ResalePropertyListResponse> test=controller
+                                                .resalePropertyList[index].otherBrokerClientData;
+                                            var property = controller
+                                                .resalePropertyList[index];
 
-                                          if(test.length>1)
-                                            {
-                                              auto=true;
-                                            }
-                                            if (property.projectName
-                                              .toString()
-                                              .toLowerCase()
-                                              .contains(mobileNumberInput.value.text
-                                              .toLowerCase())) {
-                                            return Container(
-                                            margin: const EdgeInsets.symmetric(vertical: 20),
-                                            // height: 250,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(12),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  offset: Offset(0, 2),
-                                                  blurRadius: 12,
-                                                  color: Colors.black12,
-                                                ),
-                                              ],
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(
-                                                      vertical: 8.0,
-                                                      horizontal: 10.0,
+                                            if(test.length>1)
+                                              {
+                                                auto=true;
+                                              }
+                                              if (property.projectName
+                                                .toString()
+                                                .toLowerCase()
+                                                .contains(mobileNumberInput.value.text
+                                                .toLowerCase())) {
+                                              return Container(
+                                              margin: const EdgeInsets.symmetric(vertical: 20),
+                                              // height: 250,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(12),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    offset: Offset(0, 2),
+                                                    blurRadius: 12,
+                                                    color: Colors.black12,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.symmetric(
+                                                        vertical: 8.0,
+                                                        horizontal: 10.0,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              property.projectName,
+                                                              style: const TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.w600,
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            property.projectName,
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                           Icons.add_business_rounded,
+                                                            color: Colors.black87,
+                                                            size: 18,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              property.buildFloors.toString(),
+                                                              style: const TextStyle(
+                                                                color: Colors.black87,
+                                                                fontSize: 15,
+                                                                fontWeight: FontWeight.w500,
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                      child: Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.note,
+                                                            color: Colors.black87,
+                                                            size: 18,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              property.propAbout,
+                                                              style: const TextStyle(
+                                                                color: Colors.black87,
+                                                                fontSize: 13,
+                                                                fontWeight: FontWeight.w500,
+                                                                overflow: TextOverflow.clip,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Divider(thickness: 1,),
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Text(
+                                                                      property.propRoom,
+                                                                      style: const TextStyle(
+                                                                        color: Colors.black87,
+                                                                        fontSize: 15,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Text(
+                                                                    property.propCarpetArea.toString()+" sqt",
+                                                                      style: const TextStyle(
+                                                                        color: Colors.black87,
+                                                                        fontSize: 15,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets.fromLTRB(8,8,20,8),
+                                                                child: Align(alignment:Alignment.topRight,child: Text(
+                                                                    "₹ "+property.propPrice.toString(),
+                                                                    style: const TextStyle(
+                                                                      color: PRIMARY_COLOR,
+                                                                      fontSize: 22,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                    ))),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+
+                                                    test.length>0?
+                                                    Divider(thickness: 1,):Container(),
+                                                    test.length>0?
+                                                    CarouselSlider.builder(
+                                                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                                                            Container(
+                                                              child: Card(
+                                                                margin: EdgeInsets.zero,
+                                                                color: Color(0xfff5f7f8),
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                ),
+                                                                elevation: 5,
+                                                                child: Column(
+
+                                                                 children: [
+                                                            Row(
+                                                            children: [
+                                                            Padding(
+                                                              padding: const EdgeInsets.all(8.0),
+                                                              child: Text(
+                                                                  test[itemIndex].projectName,
+                                                              style: const TextStyle(
+                                                              color: Colors.black54,
                                                               fontSize: 20,
                                                               fontWeight: FontWeight.w600,
                                                               overflow: TextOverflow.ellipsis,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                         Icons.add_business_rounded,
-                                                          color: Colors.black87,
-                                                          size: 18,
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            property.buildFloors.toString(),
-                                                            style: const TextStyle(
-                                                              color: Colors.black87,
-                                                              fontSize: 15,
-                                                              fontWeight: FontWeight.w500,
-                                                              overflow: TextOverflow.ellipsis,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                    child: Row(
-                                                      children: [
-                                                        const Icon(
-                                                          Icons.note,
-                                                          color: Colors.black87,
-                                                          size: 18,
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            property.propAbout,
-                                                            style: const TextStyle(
-                                                              color: Colors.black87,
-                                                              fontSize: 13,
-                                                              fontWeight: FontWeight.w500,
-                                                              overflow: TextOverflow.clip,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Divider(thickness: 1,),
-                                                  Padding(
-                                                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Column(
-                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: Text(
-                                                                    property.propRoom,
-                                                                    style: const TextStyle(
-                                                                      color: Colors.black87,
-                                                                      fontSize: 15,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      overflow: TextOverflow.ellipsis,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: Text(
-                                                                  property.propCarpetArea.toString()+" sqt",
-                                                                    style: const TextStyle(
-                                                                      color: Colors.black87,
-                                                                      fontSize: 15,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      overflow: TextOverflow.ellipsis,
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            Padding(
-                                                              padding: const EdgeInsets.fromLTRB(8,8,20,8),
-                                                              child: Align(alignment:Alignment.topRight,child: Text(
-                                                                  "₹ "+property.propPrice.toString(),
-                                                                  style: const TextStyle(
-                                                                    color: PRIMARY_COLOR,
-                                                                    fontSize: 22,
-                                                                    fontWeight: FontWeight.w500,
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                  ))),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-
-                                                  test.length>0?
-                                                  Divider(thickness: 1,):Container(),
-                                                  test.length>0?
-                                                  CarouselSlider.builder(
-                                                      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                                                          Container(
-                                                            child: Card(
-                                                              margin: EdgeInsets.zero,
-                                                              color: Color(0xfff5f7f8),
-                                                              shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(10),
                                                               ),
-                                                              elevation: 5,
-                                                              child: Column(
-
-                                                               children: [
-                                                          Row(
-                                                          children: [
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child: Text(
-                                                                test[itemIndex].projectName,
-                                                            style: const TextStyle(
-                                                            color: Colors.black54,
-                                                            fontSize: 20,
-                                                            fontWeight: FontWeight.w600,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            ),
-                                                            ),
-                                                          ),
-                                                          ],
-                                                          ),
-                                          Padding(
-                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                          child: Row(
-                                          children: [
-                                          const Icon(
-                                          Icons.add_business_rounded,
-                                          color: Colors.black54,
-                                          size: 18,
-                                          ),
-                                          const SizedBox(
-                                          width: 5,
-                                          ),
-                                          Text(
-                                              test[itemIndex].buildFloors.toString(),
-                                          style: const TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          overflow: TextOverflow.ellipsis,
-                                          ),
-                                          ),
-                                          ],
-                                          ),
-                                          ),
-                                          Padding(
-                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                          child: Row(
-                                          children: [
-                                          const Icon(
-                                          Icons.note,
-                                          color: Colors.black54,
-                                          size: 18,
-                                          ),
-                                          const SizedBox(
-                                          width: 5,
-                                          ),
-                                          Expanded(
-                                          child: Text(
-                                              test[itemIndex].propAbout,
-                                          style: const TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          overflow: TextOverflow.clip,
-                                          ),
-                                          ),
-                                          ),
-                                          ],
-                                          ),
-                                          ),
-                                          Divider(thickness: 1,),
-                                                                 Padding(
-                                                                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                                   child: Column(
-                                                                     children: [
-                                                                       Row(
-                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                         children: [
-                                                                           Column(
-                                                                             mainAxisAlignment: MainAxisAlignment.center,
-                                                                             children: [
-                                                                               Padding(
-                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                 child: Text(
-                                                                                   test[itemIndex].propRoom,
-                                                                                   style: const TextStyle(
-                                                                                     color: Colors.black54,
-                                                                                     fontSize: 15,
-                                                                                     fontWeight: FontWeight.w500,
-                                                                                     overflow: TextOverflow.ellipsis,
-                                                                                   ),
-                                                                                 ),
-                                                                               ),
-                                                                               Padding(
-                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                 child: Text(
-                                                                                   test[itemIndex].propCarpetArea.toString()+" sqt",
-                                                                                   style: const TextStyle(
-                                                                                     color: Colors.black54,
-                                                                                     fontSize: 15,
-                                                                                     fontWeight: FontWeight.w500,
-                                                                                     overflow: TextOverflow.ellipsis,
-                                                                                   ),
-                                                                                 ),
-                                                                               )
-                                                                             ],
-                                                                           ),
-                                                                           Padding(
-                                                                             padding: const EdgeInsets.fromLTRB(8,8,20,8),
-                                                                             child: Align(alignment:Alignment.topRight,child: Text(
-                                                                                 "₹ "+test[itemIndex].propPrice.toString(),
-                                                                                 style: const TextStyle(
-                                                                                   color: PRIMARY_COLOR,
-                                                                                   fontSize: 22,
-                                                                                   fontWeight: FontWeight.w500,
-                                                                                   overflow: TextOverflow.ellipsis,
-                                                                                 ))),
-                                                                           )
-                                                                         ],
-                                                                       ),
-                                                                     ],
-                                                                   ),
-                                                                 ),
-                                                               ],
                                                               ),
                                                             ),
-                                                          ),
-                                                      options: CarouselOptions(
-                                                        aspectRatio: 16/10,
-                                                        viewportFraction: 0.9,
-                                                        initialPage: 0,
-                                                        enableInfiniteScroll: auto,
-                                                        reverse: false,
-                                                        autoPlay: auto,
-                                                        autoPlayInterval: Duration(seconds: 3),
-                                                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                                        autoPlayCurve: Curves.fastOutSlowIn,
-                                                        enlargeCenterPage: true,
-                                                     //   onPageChanged: callbackFunction,
-                                                        scrollDirection: Axis.horizontal,
-                                                      ), itemCount: test.length,
-                                                  ):Container()
-
-                                                ],
-                                              ),
+                                                            ],
+                                                            ),
+                                            Padding(
+                                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                            child: Row(
+                                            children: [
+                                            const Icon(
+                                            Icons.add_business_rounded,
+                                            color: Colors.black54,
+                                            size: 18,
                                             ),
-                                          );
-                                          }
-                                          return Container();
-                                        }),
-                                      ),
+                                            const SizedBox(
+                                            width: 5,
+                                            ),
+                                            Text(
+                                                test[itemIndex].buildFloors.toString(),
+                                            style: const TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            overflow: TextOverflow.ellipsis,
+                                            ),
+                                            ),
+                                            ],
+                                            ),
+                                            ),
+                                            Padding(
+                                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                            child: Row(
+                                            children: [
+                                            const Icon(
+                                            Icons.note,
+                                            color: Colors.black54,
+                                            size: 18,
+                                            ),
+                                            const SizedBox(
+                                            width: 5,
+                                            ),
+                                            Expanded(
+                                            child: Text(
+                                                test[itemIndex].propAbout,
+                                            style: const TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            overflow: TextOverflow.clip,
+                                            ),
+                                            ),
+                                            ),
+                                            ],
+                                            ),
+                                            ),
+                                            Divider(thickness: 1,),
+                                                                   Padding(
+                                                                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                                     child: Column(
+                                                                       children: [
+                                                                         Row(
+                                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                           children: [
+                                                                             Column(
+                                                                               mainAxisAlignment: MainAxisAlignment.center,
+                                                                               children: [
+                                                                                 Padding(
+                                                                                   padding: const EdgeInsets.all(8.0),
+                                                                                   child: Text(
+                                                                                     test[itemIndex].propRoom,
+                                                                                     style: const TextStyle(
+                                                                                       color: Colors.black54,
+                                                                                       fontSize: 15,
+                                                                                       fontWeight: FontWeight.w500,
+                                                                                       overflow: TextOverflow.ellipsis,
+                                                                                     ),
+                                                                                   ),
+                                                                                 ),
+                                                                                 Padding(
+                                                                                   padding: const EdgeInsets.all(8.0),
+                                                                                   child: Text(
+                                                                                     test[itemIndex].propCarpetArea.toString()+" sqt",
+                                                                                     style: const TextStyle(
+                                                                                       color: Colors.black54,
+                                                                                       fontSize: 15,
+                                                                                       fontWeight: FontWeight.w500,
+                                                                                       overflow: TextOverflow.ellipsis,
+                                                                                     ),
+                                                                                   ),
+                                                                                 )
+                                                                               ],
+                                                                             ),
+                                                                             Padding(
+                                                                               padding: const EdgeInsets.fromLTRB(8,8,20,8),
+                                                                               child: Align(alignment:Alignment.topRight,child: Text(
+                                                                                   "₹ "+test[itemIndex].propPrice.toString(),
+                                                                                   style: const TextStyle(
+                                                                                     color: PRIMARY_COLOR,
+                                                                                     fontSize: 22,
+                                                                                     fontWeight: FontWeight.w500,
+                                                                                     overflow: TextOverflow.ellipsis,
+                                                                                   ))),
+                                                                             )
+                                                                           ],
+                                                                         ),
+                                                                       ],
+                                                                     ),
+                                                                   ),
+                                                                 ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                        options: CarouselOptions(
+                                                          aspectRatio: 16/10,
+                                                          viewportFraction: 0.9,
+                                                          initialPage: 0,
+                                                          enableInfiniteScroll: auto,
+                                                          reverse: false,
+                                                          autoPlay: auto,
+                                                          autoPlayInterval: Duration(seconds: 3),
+                                                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                                          autoPlayCurve: Curves.fastOutSlowIn,
+                                                          enlargeCenterPage: true,
+                                                       //   onPageChanged: callbackFunction,
+                                                          scrollDirection: Axis.horizontal,
+                                                        ), itemCount: test.length,
+                                                    ):Container()
+
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                            }
+                                            return Container();
+                                          }),
+                                        ),
+                                    ),
                               )
                             ],
                           ),
@@ -536,7 +547,7 @@ class _ResalePageState extends State<ResalePage>
                             height: 24,
                           ),
                           Expanded(
-                            child: (controller.isPropertyLoading.value)
+                            child: (controller.isClientLoading.value)
                                 ? Column(
                               mainAxisAlignment:
                               MainAxisAlignment.center,
@@ -556,338 +567,351 @@ class _ResalePageState extends State<ResalePage>
                                 ),
                               ],
                             )
-                                : ListView.builder(
+                                :RefreshIndicator(
+                              key: _refreshIndicatorKeyclient,
+                              color: Colors.white,
+                              backgroundColor: Colors.blue,
+                              strokeWidth: 4.0,
+                              onRefresh: () async {
+                                _refreshIndicatorKeyclient.currentState?.show();  setState(() {
+                                  controller.getResaleClientList();
+                                  test=controller.resalePropertyList();
+                                });
+                                return Future<void>.delayed(const Duration(seconds: 3));
+                              },
+                                  child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               itemCount: controller
-                                  .resaleClientList.length,
+                                    .resaleClientList.length,
                               itemBuilder: ((context, index) {
-                                var property = controller
-                                    .resaleClientList[index];
-                                List<ResaleClientListResponse> test=controller
-                                    .resaleClientList[index].other_broker_property_data;
-                                if (property.projectName
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(mobileNumberInput1.value.text
-                                    .toLowerCase())||property.propRoom
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(mobileNumberInput1.value.text
-                                    .toLowerCase()) ) {
-                                  return Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 20),
-                                  // height: 250,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 12,
-                                        color: Colors.black12,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0,
-                                          horizontal: 10.0,
+                                  var property = controller
+                                      .resaleClientList[index];
+                                  List<ResaleClientListResponse> test=controller
+                                      .resaleClientList[index].other_broker_property_data;
+                                  if (property.projectName
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(mobileNumberInput1.value.text
+                                      .toLowerCase())||property.propRoom
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(mobileNumberInput1.value.text
+                                      .toLowerCase()) ) {
+                                    return Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 20),
+                                    // height: 250,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 12,
+                                          color: Colors.black12,
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                property.projectName,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w600,
-                                                  overflow: TextOverflow.ellipsis,
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                            horizontal: 10.0,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  property.projectName,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.add_business_rounded,
-                                              color: Colors.black87,
-                                              size: 18,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                property.buildFloors.toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  overflow: TextOverflow.ellipsis,
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.add_business_rounded,
+                                                color: Colors.black87,
+                                                size: 18,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  property.buildFloors.toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.note,
-                                              color: Colors.black87,
-                                              size: 18,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                property.propAbout,
-                                                style: const TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w500,
-                                                  overflow: TextOverflow.clip,
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.note,
+                                                color: Colors.black87,
+                                                size: 18,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  property.propAbout,
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w500,
+                                                    overflow: TextOverflow.clip,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Divider(thickness: 1,),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                property.propRoom,
-                                                style: const TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  overflow: TextOverflow.ellipsis,
+                                        Divider(thickness: 1,),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                          child: Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  property.propRoom,
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                "₹ "+property.propPrice.toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  overflow: TextOverflow.ellipsis,
+                                              Expanded(
+                                                child: Text(
+                                                  "₹ "+property.propPrice.toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text("Area:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,),),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                property.propCarpetArea.toString()+" Sqrt",
-                                                style: const TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  overflow: TextOverflow.ellipsis,
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                          child: Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text("Area:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,),),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  property.propCarpetArea.toString()+" Sqrt",
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
 
-                                     test.length>0?
-                                     Divider(thickness: 1,):Container(),
-                                      test.length>0?
-                                      CarouselSlider.builder(
-                                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                                            Container(
-                                              child: Card(
-                                                margin: EdgeInsets.zero,
-                                                color: Color(0xfff5f7f8),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                                elevation: 5,
-                                                child: Column(
+                                       test.length>0?
+                                       Divider(thickness: 1,):Container(),
+                                        test.length>0?
+                                        CarouselSlider.builder(
+                                          itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                                              Container(
+                                                child: Card(
+                                                  margin: EdgeInsets.zero,
+                                                  color: Color(0xfff5f7f8),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  elevation: 5,
+                                                  child: Column(
 
-                                                  children: [
-                                                    Divider(thickness: 1,),
-                                                    Row(
-                                                      children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Text(
-                                                            test[itemIndex].projectName,
-                                                            style: const TextStyle(
-                                                              color: Colors.black54,
-                                                              fontSize: 20,
-                                                              fontWeight: FontWeight.w600,
-                                                              overflow: TextOverflow.ellipsis,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                      child: Row(
+                                                    children: [
+                                                      Divider(thickness: 1,),
+                                                      Row(
                                                         children: [
-                                                          const Icon(
-                                                            Icons.add_business_rounded,
-                                                            color: Colors.black54,
-                                                            size: 18,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Text(
-                                                            test[itemIndex].buildFloors.toString(),
-                                                            style: const TextStyle(
-                                                              color: Colors.black54,
-                                                              fontSize: 15,
-                                                              fontWeight: FontWeight.w500,
-                                                              overflow: TextOverflow.ellipsis,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                      child: Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.note,
-                                                            color: Colors.black54,
-                                                            size: 18,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Expanded(
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
                                                             child: Text(
-                                                              test[itemIndex].propAbout,
+                                                              test[itemIndex].projectName,
                                                               style: const TextStyle(
                                                                 color: Colors.black54,
-                                                                fontSize: 13,
-                                                                fontWeight: FontWeight.w500,
-                                                                overflow: TextOverflow.clip,
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.w600,
+                                                                overflow: TextOverflow.ellipsis,
                                                               ),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                    Divider(thickness: 1,),
-                                                    Padding(
-                                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                                      child: Column(
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(
-                                                                      test[itemIndex].propRoom,
-                                                                      style: const TextStyle(
-                                                                        color: Colors.black54,
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        overflow: TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(
-                                                                      test[itemIndex].propCarpetArea.toString()+" sqt",
-                                                                      style: const TextStyle(
-                                                                        color: Colors.black54,
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        overflow: TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                ],
+                                                      Padding(
+                                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                        child: Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons.add_business_rounded,
+                                                              color: Colors.black54,
+                                                              size: 18,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Text(
+                                                              test[itemIndex].buildFloors.toString(),
+                                                              style: const TextStyle(
+                                                                color: Colors.black54,
+                                                                fontSize: 15,
+                                                                fontWeight: FontWeight.w500,
+                                                                overflow: TextOverflow.ellipsis,
                                                               ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.fromLTRB(8,8,20,8),
-                                                                child: Align(alignment:Alignment.topRight,child: Text(
-                                                                    "₹ "+test[itemIndex].propPrice.toString(),
-                                                                    style: const TextStyle(
-                                                                      color: PRIMARY_COLOR,
-                                                                      fontSize: 22,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      overflow: TextOverflow.ellipsis,
-                                                                    ))),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ],
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Padding(
+                                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                        child: Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons.note,
+                                                              color: Colors.black54,
+                                                              size: 18,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                test[itemIndex].propAbout,
+                                                                style: const TextStyle(
+                                                                  color: Colors.black54,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500,
+                                                                  overflow: TextOverflow.clip,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Divider(thickness: 1,),
+                                                      Padding(
+                                                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                                        child: Column(
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Text(
+                                                                        test[itemIndex].propRoom,
+                                                                        style: const TextStyle(
+                                                                          color: Colors.black54,
+                                                                          fontSize: 15,
+                                                                          fontWeight: FontWeight.w500,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Text(
+                                                                        test[itemIndex].propCarpetArea.toString()+" sqt",
+                                                                        style: const TextStyle(
+                                                                          color: Colors.black54,
+                                                                          fontSize: 15,
+                                                                          fontWeight: FontWeight.w500,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.fromLTRB(8,8,20,8),
+                                                                  child: Align(alignment:Alignment.topRight,child: Text(
+                                                                      "₹ "+test[itemIndex].propPrice.toString(),
+                                                                      style: const TextStyle(
+                                                                        color: PRIMARY_COLOR,
+                                                                        fontSize: 22,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                      ))),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                        options: CarouselOptions(
-                                          aspectRatio: 16/10,
-                                          viewportFraction: 0.9,
-                                          initialPage: 0,
-                                          enableInfiniteScroll: auto,
-                                          reverse: false,
-                                          autoPlay: auto,
-                                          autoPlayInterval: Duration(seconds: 3),
-                                          autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                          autoPlayCurve: Curves.fastOutSlowIn,
-                                          enlargeCenterPage: true,
-                                          //   onPageChanged: callbackFunction,
-                                          scrollDirection: Axis.horizontal,
-                                        ), itemCount: test.length,
-                                      ):Container()
+                                          options: CarouselOptions(
+                                            aspectRatio: 16/10,
+                                            viewportFraction: 0.9,
+                                            initialPage: 0,
+                                            enableInfiniteScroll: auto,
+                                            reverse: false,
+                                            autoPlay: auto,
+                                            autoPlayInterval: Duration(seconds: 3),
+                                            autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            enlargeCenterPage: true,
+                                            //   onPageChanged: callbackFunction,
+                                            scrollDirection: Axis.horizontal,
+                                          ), itemCount: test.length,
+                                        ):Container()
 
 
-                                    ],
-                                  ),
-                                );
-                                }
-                                return Container();
+                                      ],
+                                    ),
+                                  );
+                                  }
+                                  return Container();
                               }),
                             ),
+                                ),
                           )
                         ],
                       ),
