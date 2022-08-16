@@ -82,11 +82,8 @@ class RouteTwo extends StatelessWidget {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: FractionalOffset.bottomCenter,
-                              end: FractionalOffset.topCenter,
-                              colors: [
-                                Color(0x00000000).withOpacity(0.9),
-                                Color(0xff000000).withOpacity(0.01),
-                              ],
+                              end: FractionalOffset.topCenter, colors: [],
+
                             ),
                           ),
                         )

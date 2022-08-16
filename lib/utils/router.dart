@@ -17,6 +17,8 @@ import 'package:propertystop/screens/request_visit.dart';
 import 'package:propertystop/screens/splash.dart';
 
 import '../add_property_bottomsheet.dart';
+import '../pagination.dart';
+import '../screens/broker/pages/property_list.dart';
 
 // Define Routes
 
@@ -30,6 +32,7 @@ const String registerPage = 'register';
 const String mainNav = 'main';
 const String brokerMain = 'broker';
 const String userMain = 'user';
+const String testuser = 'testuser';
 const String primaryMain = 'primary';
 const String emiCalcPage = 'emi';
 const String loanApplicationPage = 'loan';
@@ -58,6 +61,8 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const BrokerHomeScreen());
     case userMain:
       return MaterialPageRoute(builder: (context) => const UserHomeScreen());
+    case testuser:
+      return MaterialPageRoute(builder: (context) =>  Pagination(type: 'test',));
     case emiCalcPage:
       return MaterialPageRoute(builder: (context) => const EmiCalcScreen());
     case profilePage:

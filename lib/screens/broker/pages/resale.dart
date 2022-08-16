@@ -157,7 +157,7 @@ class _ResalePageState extends State<ResalePage>
                                     : RefreshIndicator(
                                   key: _refreshIndicatorKey,
                                   color: Colors.white,
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: Colors.red,
                                   strokeWidth: 4.0,
                                   onRefresh: () async {
                                     _refreshIndicatorKey.currentState?.show(); setState(() {
@@ -166,7 +166,8 @@ class _ResalePageState extends State<ResalePage>
                                   });
                                     return Future<void>.delayed(const Duration(seconds: 3));
                                   },
-                                      child: ListView.builder(
+                                      child: controller
+                                          .resalePropertyList.length>0?ListView.builder(
                                           physics: const BouncingScrollPhysics(),
                                           itemCount: controller
                                               .resalePropertyList.length,
@@ -492,9 +493,11 @@ class _ResalePageState extends State<ResalePage>
                                               ),
                                             );
                                             }
-                                            return Container();
+                                            return Container(child: Image.asset("assets/no_property.png"),);
                                           }),
-                                        ),
+                                        ):Container(child: Center(
+                                        child: Image.asset("assets/no_property.png"),
+                                      ),),
                                     ),
                               )
                             ],
@@ -570,7 +573,7 @@ class _ResalePageState extends State<ResalePage>
                                 :RefreshIndicator(
                               key: _refreshIndicatorKeyclient,
                               color: Colors.white,
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Colors.red,
                               strokeWidth: 4.0,
                               onRefresh: () async {
                                 _refreshIndicatorKeyclient.currentState?.show();  setState(() {
@@ -579,7 +582,8 @@ class _ResalePageState extends State<ResalePage>
                                 });
                                 return Future<void>.delayed(const Duration(seconds: 3));
                               },
-                                  child: ListView.builder(
+                                  child: controller
+                                      .resaleClientList.length>0?ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               itemCount: controller
                                     .resaleClientList.length,
@@ -908,9 +912,11 @@ class _ResalePageState extends State<ResalePage>
                                     ),
                                   );
                                   }
-                                  return Container();
+                                  return Container(child: Image.asset("assets/no_property.png"),);
                               }),
-                            ),
+                            ):Container(child: Center(
+                                    child: Image.asset("assets/no_property.png"),
+                                  ),),
                                 ),
                           )
                         ],

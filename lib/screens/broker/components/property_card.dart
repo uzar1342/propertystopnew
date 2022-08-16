@@ -221,7 +221,7 @@ class BrokerPropertyListCard extends StatelessWidget {
                   const SizedBox(
                     width: 12,
                   ),
-                  if(property.downloadBrochure==null||property.downloadBrochure=="#"||property.downloadBrochure=="")
+                  if(property.downloadBrochure=="#"||property.downloadBrochure=="")
                   Container()
                     else
                     Expanded(

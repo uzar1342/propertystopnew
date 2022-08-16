@@ -60,7 +60,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "resale property",
+                                "RESALE PROPERTY",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                 child: DropdownButtonFormField<String>(
                                   isExpanded: false,
                                   items: [
-                                    buildMenuItem("RESAL PROPERTY"),
+                                    buildMenuItem("RESALE PROPERTY"),
                                     buildMenuItem("RESALE CLIENT"),
                                   ],
                                   onChanged: (value) => setState(() {

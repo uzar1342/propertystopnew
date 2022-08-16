@@ -7,7 +7,8 @@ class PropertyDetailViewModel extends GetxController {
   var isLoading = false.obs;
   var propertyDetail = Rxn<PropertyDetailResponse>();
   var propDetails = <PropertyDetails>[].obs;
-var place;
+  var place;
+  List<BhkDatum> room=[];
   // PropertyListViewModel(){
   //   getPropertyList();
   // }
@@ -35,7 +36,8 @@ var place;
               title: "Property Type", value: result.propData[0].propType),
         ];
         place=result.places;
-
+        result.rooms.forEach((element) {element.bhkData.forEach((element) {room.add(element); }); });
+        print(room.length);
       }
     } catch (exp) {
       print(exp);

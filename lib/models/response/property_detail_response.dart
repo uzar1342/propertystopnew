@@ -221,9 +221,12 @@ class BhkDatum {
     required this.propPrice,
     required this.bluePrint,
     required this.threedPrint,
+    required this.bhk,
+
   });
 
   int rmId;
+  String bhk;
   String propCarpetArea;
   String propPrice;
   String bluePrint;
@@ -235,6 +238,7 @@ class BhkDatum {
         propPrice: json["prop_price"],
         bluePrint: json["blue_print"],
         threedPrint: json["threed_print"],
+      bhk:json["bhk"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -243,5 +247,6 @@ class BhkDatum {
         "prop_price": propPrice,
         "blue_print": bluePrint,
         "threed_print": threedPrint,
+        "bhk":bhk
       };
 }

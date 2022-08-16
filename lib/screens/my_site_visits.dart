@@ -28,7 +28,7 @@ class _MySiteVisitsState extends State<MySiteVisits> {
           : SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: ListView.builder(
+        child: controller.siteVisits.length>0?ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 5),
           physics: const BouncingScrollPhysics(),
           itemCount: controller.siteVisits.length,
@@ -168,7 +168,7 @@ class _MySiteVisitsState extends State<MySiteVisits> {
 //                 ),
 //               );
           }),
-        ),
+        ):Container(child: Center(child: Image.asset("assets/no_property.png"),),),
       )),
     );
   }

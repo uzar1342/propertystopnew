@@ -24,7 +24,8 @@ import 'package:propertystop/utils/custom_dialog.dart';
 import 'models/response/propery_list_response.dart';
 
 class Pagination extends StatefulWidget {
-  const Pagination({super.key});
+   Pagination({super.key,required this.type});
+  String type;
 
   @override
   _PaginationState createState() => _PaginationState();
@@ -136,9 +137,8 @@ class _PaginationState extends State<Pagination> {
               ),
             ),
             actions: [
-              IconButton(
+              if(widget.type=="user") IconButton(
                 onPressed: () {
-
                   Navigator.of(context).push(MaterialPageRoute(builder: (c)=> NotificationPage()));
                 },
                 icon: const Icon(Icons.notifications),
@@ -272,8 +272,6 @@ class _PaginationState extends State<Pagination> {
                         if (snapshot.hasError)
                           return Text(snapshot.error.toString());
                         else {
-
-
                           var result = snapshot.data;
                           result?.data.forEach((element) { _posts.add(element);});
                           print(result?.data[0].projectName);
@@ -297,7 +295,7 @@ class _PaginationState extends State<Pagination> {
                                     .contains(mobileNumberInput.value.text
                                     .toLowerCase()) )
                                 return BrokerPropertyListCard(property: _posts[index]!,);
-                                return Container();
+                                return Container(child: Image.asset("assets/no_property.png"),);
 
                               }),
                             ):Column(

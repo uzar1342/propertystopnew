@@ -455,8 +455,11 @@ async {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString(
                             constants.selectedOption, selectedOption!);
+                        prefs.setString(
+                            constants.selectedOption, selectedOption!);
+
                         Navigator.of(context).pushNamed(
-                            router.userMain, arguments: (route) => false);
+                            router.testuser, arguments: (route) => false);
                         return;
                       }
                     },

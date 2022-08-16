@@ -10,6 +10,7 @@ import 'package:propertystop/utils/router.dart' as router;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/custom_dialog.dart';
+import '../../notifications.dart';
 import '../../realestate_webview.dart';
 
 class BrokerOthersPage extends StatefulWidget {
@@ -237,13 +238,17 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                         ),
                       ),
                       child: Row(
-                        children: const [
-                          Text(
-                            "Notifications",
-                            style: TextStyle(
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                        children:  [
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (c)=> NotificationPage()));
+                            },child: Text(
+                              "Notifications",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],

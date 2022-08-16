@@ -54,17 +54,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       // const SizedBox(
                       //   height: 28,
                       // ),
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          "Help ?",
-                          style: TextStyle(
-                            color: constants.PRIMARY_COLOR,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
+                      // const Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: Text(
+                      //     "Help ?",
+                      //     style: TextStyle(
+                      //       color: constants.PRIMARY_COLOR,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 15,
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
                         color: Colors.transparent,
                         width: MediaQuery.of(context).size.width,

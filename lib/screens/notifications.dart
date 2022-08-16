@@ -85,6 +85,7 @@ class _NotificationPageState extends State<NotificationPage> {
               // if we got our data
             } else if (snapshot.hasData) {
               // Extracting data from snapshot object
+              
               final data = snapshot.data ;
               List as=data["data"];
               as.forEach((element) { _posts.add(element);});
@@ -93,7 +94,7 @@ class _NotificationPageState extends State<NotificationPage> {
               paglen=int.parse(n.length.toString());
 
               return Center(
-                child: ListView.builder(
+                child: _posts.length>0?ListView.builder(
                   controller: controller,
                   physics: const BouncingScrollPhysics(),
                   itemCount: _posts.length,
@@ -209,7 +210,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       );
                     return Container();
                   }),
-                ),
+                ):Container(child: Image.asset("assets/no_property.png"),),
               );
             }
           }
