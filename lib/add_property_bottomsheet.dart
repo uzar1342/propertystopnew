@@ -297,7 +297,7 @@ class _AddpropertylistState extends State<Addpropertylist> {
                                       prop_carpet_area.value.text != "") {
                                     context.loaderOverlay.show();
 
-                                    if(resel=="RESAL PROPERTY")
+                                    if(resel=="RESALE PROPERTY")
                                       {
                                         type="resale_property";
                                       }

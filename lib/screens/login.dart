@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   mobileNumberInput.text);
                               prefs.setString(constants.userType,
                                   widget.type);
-
+                              constants.checktype=prefs.getString(constants.userType)??"";
                               // Login Success
                               Fluttertoast.showToast(
                                 msg: "Login Sucessfull",

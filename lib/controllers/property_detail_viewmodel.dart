@@ -37,7 +37,7 @@ class PropertyDetailViewModel extends GetxController {
         ];
         place=result.places;
         result.rooms.forEach((element) {element.bhkData.forEach((element) {room.add(element); }); });
-        print(room.length);
+        print(result.propData[0].downloadbrochure);
       }
     } catch (exp) {
       print(exp);

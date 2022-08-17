@@ -122,9 +122,11 @@ class PropDatum {
     required this.propertyStatus,
     required this.uniqueId,
     required this.thumbnail,
+    required this.downloadbrochure
   });
 
   int id;
+  dynamic downloadbrochure;
   String projectName;
   String propType;
   String propAddress;
@@ -146,6 +148,7 @@ class PropDatum {
 
   factory PropDatum.fromJson(Map<String, dynamic> json) => PropDatum(
         id: json["id"],
+        downloadbrochure:json["download_brochure"],
         projectName: json["project_name"],
         propType: json["prop_type"],
         propAddress: json["prop_address"],
@@ -175,6 +178,7 @@ class PropDatum {
         "prop_pincode": propPincode,
         "prop_state": propState,
         "prop_country": propCountry,
+    "download_brochure":downloadbrochure,
         "build_floors": buildFloors,
         "build_wings": buildWings,
         "builder_name": builderName,

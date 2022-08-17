@@ -288,12 +288,13 @@ class _ResalePageState extends State<ResalePage>
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                               Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Padding(
                                                                     padding: const EdgeInsets.all(8.0),
                                                                     child: Text(
-                                                                      property.propRoom,
+                                                                      property.propRoom.trim(),
                                                                       style: const TextStyle(
                                                                         color: Colors.black87,
                                                                         fontSize: 15,
@@ -304,14 +305,18 @@ class _ResalePageState extends State<ResalePage>
                                                                   ),
                                                                   Padding(
                                                                     padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(
-                                                                    property.propCarpetArea.toString()+" sqt",
-                                                                      style: const TextStyle(
-                                                                        color: Colors.black87,
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        overflow: TextOverflow.ellipsis,
-                                                                      ),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                        property.propCarpetArea.toString(),
+                                                                          style: const TextStyle(
+                                                                            color: Colors.black87,
+                                                                            fontSize: 15,
+                                                                            fontWeight: FontWeight.w500,
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),Text(" sqft",style: TextStyle(fontSize: 15,),),
+                                                                      ],
                                                                     ),
                                                                   )
                                                                 ],
@@ -440,21 +445,25 @@ class _ResalePageState extends State<ResalePage>
                                                                                  ),
                                                                                  Padding(
                                                                                    padding: const EdgeInsets.all(8.0),
-                                                                                   child: Text(
-                                                                                     test[itemIndex].propCarpetArea.toString()+" sqt",
-                                                                                     style: const TextStyle(
-                                                                                       color: Colors.black54,
-                                                                                       fontSize: 15,
-                                                                                       fontWeight: FontWeight.w500,
-                                                                                       overflow: TextOverflow.ellipsis,
-                                                                                     ),
+                                                                                   child: Row(
+                                                                                     children: [
+                                                                                       Text(
+                                                                                         test[itemIndex].propCarpetArea.toString(),
+                                                                                         style: const TextStyle(
+                                                                                           color: Colors.black54,
+                                                                                           fontSize: 15,
+                                                                                           fontWeight: FontWeight.w500,
+                                                                                           overflow: TextOverflow.ellipsis,
+                                                                                         ),
+                                                                                       ),Text(" sqft",style: TextStyle(fontSize: 15,),),
+                                                                                     ],
                                                                                    ),
                                                                                  )
                                                                                ],
                                                                              ),
                                                                              Padding(
                                                                                padding: const EdgeInsets.fromLTRB(8,8,20,8),
-                                                                               child: Align(alignment:Alignment.topRight,child: Text(
+                                                                               child: Container(alignment:Alignment.topRight,child: Text(
                                                                                    "₹ "+test[itemIndex].propPrice.toString(),
                                                                                    style: const TextStyle(
                                                                                      color: PRIMARY_COLOR,
@@ -712,14 +721,16 @@ class _ResalePageState extends State<ResalePage>
                                                 ),
                                               ),
                                               Expanded(
-                                                child: Text(
-                                                  "₹ "+property.propPrice.toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black87,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w500,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(8,8,20,8),
+                                                  child: Container(alignment:Alignment.topRight,child: Text(
+                                                      "₹ "+property.propPrice.toString(),
+                                                      style: const TextStyle(
+                                                        color: PRIMARY_COLOR,
+                                                        fontSize: 22,
+                                                        fontWeight: FontWeight.w500,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ))),
                                                 ),
                                               ),
                                             ],
@@ -732,20 +743,18 @@ class _ResalePageState extends State<ResalePage>
                                               const SizedBox(
                                                 width: 5,
                                               ),
-                                              Text("Area:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,),),
+
+                                              Text(
+                                                property.propCarpetArea.toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),Text(" sqft",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,),),
                                               const SizedBox(
                                                 width: 5,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  property.propCarpetArea.toString()+" Sqrt",
-                                                  style: const TextStyle(
-                                                    color: Colors.black87,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w500,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
                                               ),
                                             ],
                                           ),

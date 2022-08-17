@@ -14,6 +14,7 @@ import 'package:gif_view/gif_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:propertystop/screens/broker/components/property_card.dart';
 import 'package:propertystop/screens/notifications.dart';
+import 'package:propertystop/utils/constants.dart';
 import 'package:propertystop/utils/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/response/propery_list_response.dart';
@@ -42,6 +43,11 @@ class _PaginationState extends State<Pagination> {
   @override
   void initState() {
     super.initState();
+    if(widget.type.toString().trim()=="test")
+      {
+        testuser=true;
+      }
+    print(testuser);
     controller = ScrollController()..addListener(_scrollListener);
   }
   getLocation() async {

@@ -1,23 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:propertystop/models/response/property_detail_response.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayerApp extends StatelessWidget {
-  const VideoPlayerApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Video Player Demo',
-      home: VideoPlayerScreen(),
-    );
-  }
-}
 
 class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({super.key});
+   VideoPlayerScreen(List<Floor> this.videos, {super.key});
 
+   List<Floor> videos;
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
@@ -27,13 +18,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   late Future<void> _initializeVideoPlayerFuture;
 
-  List<String> url=['https://propertystop.com/media/property-images/15/videos/Video.mp4',
-    'https://propertystop.com/media/property-images/15/videos/Video.mp4',
-    'https://propertystop.com/media/property-images/15/videos/Video.mp4'];
-
+  List<String> url=[];
 
   addurl()
   {
+
+    for (var element in widget.videos)
+      {
+        url.add(element.url);
+      }
+
+
     for (var element in url) { _controller.add(VideoPlayerController.network(
       element,
     ));}

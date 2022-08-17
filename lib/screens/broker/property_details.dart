@@ -16,6 +16,7 @@ import 'package:propertystop/utils/constants.dart' as constants;
 import 'package:propertystop/utils/custom_dialog.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../models/response/property_detail_response.dart';
+import '../../utils/constants.dart';
 import '../../vidioplayer.dart';
 
 class BrokerPropertyDetailPage extends StatefulWidget {
@@ -43,7 +44,6 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
     controller.place;
     room=controller.room;
     controller.getPropertyDetail(widget.property.uniqueId);
-    print(controller.room);
   }
 
 
@@ -217,7 +217,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                               const SizedBox(
                                 height: 12,
                               ),
-                              if (Uri.tryParse(widget.property.downloadBrochure
+                              if (Uri.tryParse(controller.propertyDetail.value!.propData[0].downloadbrochure
                                           .toString())
                                       ?.hasAbsolutePath ??
                                   false)
@@ -229,8 +229,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                                   ),
                                   onPressed: () {
                                     Get.to(() => RealEstateWebView(
-                                          pageUrl: widget
-                                              .property.downloadBrochure
+                                          pageUrl: controller.propertyDetail.value!.propData[0].downloadbrochure
                                               .toString(),
                                           title: 'Brochure',
                                         ));
@@ -307,7 +306,8 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                                 Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      Get.to(() => VideoPlayerScreen());
+                                      Get.to(() => VideoPlayerScreen(controller
+                                          .propertyDetail.value!.videos));
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -643,7 +643,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                                                       ],
                                                     ),
                                                   ),
-                                                  Expanded(child:Center(child: Align(alignment:Alignment.topCenter,child: Text("₹"+room[index].propPrice.toString(),style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold))))
+                                                  Expanded(child:Center(child: Container(alignment:Alignment.topRight,child: Text("₹"+room[index].propPrice.toString(),style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold))))
                                                   )],
                                               ),
                                             ),
@@ -1150,6 +1150,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              if(!testuser)
               ElevatedButton(
                 onPressed: () async {
                   final dialogAction = await Dialogs.yesNoAlertDialog(
@@ -1191,6 +1192,7 @@ class _BrokerPropertyDetailPageState extends State<BrokerPropertyDetailPage> {
                   ),
                 ),
               ),
+
               ElevatedButton(
                 onPressed: () async {
                   final dialogAction = await Dialogs.yesNoAlertDialog(

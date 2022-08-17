@@ -182,6 +182,8 @@ class NetworkService {
       'device': 'Mobile'
     });
 
+    print(request.fields);
+
     var streamedResponse =
         await request.send().timeout(const Duration(seconds: 20));
 
@@ -318,7 +320,6 @@ class NetworkService {
 
     }
 
-print("Addtype"+Addtype.keys.first+Addtype.values.first);
     var request = http.MultipartRequest('POST', url);
     request.fields.addAll({
       Addtype.keys.first:Addtype.values.first,

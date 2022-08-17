@@ -22,9 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bool? isLoggedIn = prefs.getBool(constants.isLoggedIn);
     String? intro = prefs.getString(constants.isIntro);
-    constants.checktype = prefs.getString(constants.userType)??"123";
-
-//print("object"+constants.checktype);
+    constants.checktype=prefs.getString(constants.userType)??"";
 
     if (isLoggedIn != null) {
       setState(() {

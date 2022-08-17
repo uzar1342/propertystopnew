@@ -78,23 +78,23 @@ async {
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 12,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            changeSelectedOption("broker");
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          changeSelectedOption("broker");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 12,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
                           child: Stack(
                             children: [
                               Column(
@@ -146,23 +146,23 @@ async {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 12,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            changeSelectedOption("buy_sell");
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          changeSelectedOption("buy_sell");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 12,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
                           child: Stack(
                             children: [
                               Column(
@@ -214,23 +214,23 @@ async {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 12,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            changeSelectedOption("emi_calculator");
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          changeSelectedOption("emi_calculator");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 12,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
                           child: Stack(
                             children: [
                               Column(
@@ -282,23 +282,23 @@ async {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 12,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            changeSelectedOption("loan_application");
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          changeSelectedOption("loan_application");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 12,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
                           child: Stack(
                             children: [
                               Column(
@@ -350,23 +350,23 @@ async {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 12,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            changeSelectedOption("primary_new");
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          changeSelectedOption("primary_new");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 12,
+                                color: Colors.black12,
+                              ),
+                            ],
+                          ),
                           child: Stack(
                             children: [
                               Column(
@@ -455,9 +455,6 @@ async {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString(
                             constants.selectedOption, selectedOption!);
-                        prefs.setString(
-                            constants.selectedOption, selectedOption!);
-
                         Navigator.of(context).pushNamed(
                             router.testuser, arguments: (route) => false);
                         return;

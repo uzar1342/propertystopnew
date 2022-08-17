@@ -69,6 +69,11 @@ class _RequestVisitBottomSheetState extends State<RequestVisitBottomSheet> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Center(child: Text("REQUEST VISITE", style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              )),),
                               const Text(
                                 "Full Name",
                                 style: TextStyle(

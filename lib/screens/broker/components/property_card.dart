@@ -99,13 +99,16 @@ class BrokerPropertyListCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Text(
-                      property.propType,
-                      style: const TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        property.propType,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ),
@@ -183,7 +186,7 @@ class BrokerPropertyListCard extends StatelessWidget {
                           // Navigator.of(context).pushNamed(
                           //   router.requestVisit,
                           // );
-                          print("Here");
+                          print(property.downloadBrochure);
                           print(property.uniqueId);
                           showModalBottomSheet<dynamic>(
                               isScrollControlled: true,

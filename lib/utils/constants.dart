@@ -13,7 +13,7 @@ const String logo = "assets/logo.png";
 // API's
 const String login = "";
 String checktype="";
-String notuse="";
+bool testuser=false;
 // Shared Preference Keys
 const String isLoggedIn = "isLoggedIn";
 const String isIntro = "isIntro";
@@ -21,6 +21,7 @@ const String mobileNumber = "mobileNumber";
 const String userType = "userType";
 const String selectedOption = "selectedOption";
 const String baseUrl = "https://propertystop.com";
+
 
 // Notification Channel
 const String notificationChannel = "property_stop_notification";

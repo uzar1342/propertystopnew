@@ -1,4 +1,4 @@
-package com.example.realestate
+package com.virash.propertystop
 
 import io.flutter.embedding.android.FlutterActivity
 

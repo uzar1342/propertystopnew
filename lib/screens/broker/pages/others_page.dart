@@ -361,10 +361,11 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                       ),
                       child: GestureDetector(
                         onTap: (){
-                          // RealEstateWebView(
-                          //   pageUrl: 'https://propertystop.com',
-                          //   title: 'Terms & Conditions',
-                          // );
+                          Get.to(() =>
+                              RealEstateWebView(
+                            pageUrl: 'https://propertystop.com/terms-and-conditions',
+                            title: 'Terms & Conditions',
+                          ));
                         },
                         child: Row(
                           children: const [
@@ -395,10 +396,11 @@ class _BrokerOthersPageState extends State<BrokerOthersPage> {
                       ),
                       child: GestureDetector(
                         onTap: (){
-                          // RealEstateWebView(
-                          //   pageUrl: 'https://propertystop.com',
-                          //   title: 'Terms & Conditions',
-                          // );
+                          Get.to(() =>
+                              RealEstateWebView(
+                            pageUrl: 'https://propertystop.com/privacy-policy',
+                            title: 'Privacy Policy',
+                          ));
                         },
                         child: Row(
                           children: const [
